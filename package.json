@@ -10,7 +10,7 @@
   "main": "index.js",
   "scripts": {
     "setup": "npm install",
-    "start": "nodemon index",
+    "start": "nodemon functions/api",
     "firebase-setup": "npm install -g firebase-tools && firebase login"
   },
   "repository": {

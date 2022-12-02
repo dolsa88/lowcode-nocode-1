@@ -17,7 +17,6 @@ const port = 3001;
 
 
 
-// OPERACIONS Create Read Update Delete
 
 // OPERACIO READ ALL USERS
 app.get("/users", async (req, res) => {
