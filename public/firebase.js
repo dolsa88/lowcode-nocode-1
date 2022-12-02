@@ -58,6 +58,7 @@
         .then((response) => response.json())
         .then((data) => {
           console.log("data", data);
+          alert(data.message)
           return data;
         })
         .then((users) => {
