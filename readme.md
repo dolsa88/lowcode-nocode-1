@@ -42,3 +42,7 @@ Ejecutar en terminal "firebase deploy"
 
 cd functions -> firebase deploy 
 cd functions -> npm install
+
+
+8. Coger todo el codigo y crear mi propio GITHUB.
+OPCIONAL.
