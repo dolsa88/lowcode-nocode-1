@@ -43,7 +43,18 @@
 
     const cargarTodo = ( )=>{
         console.log('token desde index', token)
-        fetch(`http://localhost:3002/users/${token}`)
+        fetch(`http://localhost:3002/users`,
+        { 
+          method: 'get', 
+          headers: new Headers({
+              'Authorization': token
+          }), 
+      }
+
+
+
+
+        )
         .then((response) => response.json())
         .then((data) => {
           console.log("data", data);

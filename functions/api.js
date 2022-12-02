@@ -26,8 +26,14 @@ const authentication = async (token) => {
   console.log("Metodo autenticacion", token);
   try {
     const respuesta = await auth.verifyIdToken(token);
-    console.log("linea 20", respuesta);
-    return true;
+    const email = respuesta.email
+    console.log('email', email)
+    if(email === "juanito@gmail.com"){
+      return false
+    }else{
+      return true
+    }
+   
   } catch (e) {
     console.log("linea 23", e);
     return false;
@@ -35,6 +41,22 @@ const authentication = async (token) => {
 
   // SI es correcto devuelvo un true y si no es correcto devuelvo un false
 };
+app.use( async (req, res, next) => {
+  if (!req.headers.authorization) {
+    return res.status(403).json({ error: 'No credentials sent!' });
+  }
+  const token = req.headers.authorization
+
+  const puedePasar = await authentication(token);
+  if (!puedePasar) {
+    console.log('linea 42')
+    return res.status(401).send({ message: "No estás autorizado a entrar" });
+  }
+  next();
+});
+
+
+
 // OPERACIONS Create Read Update Delete
 
 // OPERACIONS Create Read Update Delete
@@ -44,16 +66,13 @@ app.get("/", (req, res) => res.send("HOla mundo"));
 
 
 // OPERACIO READ ALL USERS
-app.get("/users/:token", async (req, res) => {
-  console.log("entra en users");
+app.get("/users", async (req, res) => {
+
+  const token = req.headers.authorization
+  console.log("entra en users", token);
   // Capturar el token que me envian desde el frontend y filtrarlo por la función de comprobacion
-  const token = req.params.token;
-  console.log("Recibo en params el token", token);
-  const puedePasar = await authentication(token);
-  if (!puedePasar) {
-    console.log('linea 42')
-    return res.status(401).send({ message: "No estás autorizado a entrar" });
-  }
+  
+  
 
   // COnexión con la base de datos para leer todos los usuarios
   const users = await db.collection("usuarios").get();
@@ -62,8 +81,10 @@ app.get("/users/:token", async (req, res) => {
 });
 
 // OPERACIO READ ONE USER
-app.get("/user/:id", async (req, res) => {
+app.get("/user/:id/", async (req, res) => {
   const id = req.params.id;
+
+  
 
   //Conexión con la base de datos para leer la data de un usuario
   const user = await db.collection("usuarios").doc(id).get();
