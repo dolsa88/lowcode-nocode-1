@@ -46,7 +46,9 @@ const loguearUsuario = async (email, password) => {
   cargarTodo(token);
 };
 
-const local = require("./version.json").local;
+var local = require("./version.json")
+local = local.local
+console.log('local', local)
 const cargarTodo = (token) => {
   var url;
   if (local) {

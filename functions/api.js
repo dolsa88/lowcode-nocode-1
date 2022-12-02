@@ -8,8 +8,8 @@ const cors = require("cors");
 const admin = require("firebase-admin");
 
 // Cargo el archivo json que me informa de si la versión es la de produccion (fireebase functions) o es en local (localhost)
-const local = require("./version.json").local;
-
+let local = require("./version.json")
+local = local.local
 // Inicializacion Firestore Database
 //var passwords = require("./cert.json");
 // const admin = require("firebase-admin");
