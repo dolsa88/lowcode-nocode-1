@@ -46,7 +46,14 @@ const loguearUsuario = async (email, password) => {
 };
 
 const cargarTodo = (token) => {
-  fetch(`http://localhost:3002/users`, {
+  const local = require("./version.json").local
+  var url 
+  if(local){
+    url = 'http://localhost:3002/users'
+  } else {
+    url = 'https://us-central1-eliminarlo2.cloudfunctions.net/api'
+  }
+  fetch( url  , {
     method: "get",
     headers: new Headers({
       Authorization: token,
