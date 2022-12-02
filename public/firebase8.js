@@ -7,6 +7,9 @@ import {
   signInWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
 
+import version from "./version.json" assert { type: "json" };
+
+const local = version.local;
 // Archivo de configuración de firebase con mis credenciales
 const firebaseConfig = {
   apiKey: "AIzaSyDZHR2iFUpIUF_Ojn73RAj6xBTGBs_jytg",
@@ -46,9 +49,6 @@ const loguearUsuario = async (email, password) => {
   cargarTodo(token);
 };
 
-var local = require("./version.json")
-local = local.local
-console.log('local', local)
 const cargarTodo = (token) => {
   var url;
   if (local) {
