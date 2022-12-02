@@ -36,17 +36,18 @@ const loguearUsuario = async (email, password) => {
   console.log("loguear usuario", email, password);
   const usuario = await signInWithEmailAndPassword(auth, email, password);
   console.log("usuario", usuario);
+  console.log("usuario.user", usuario.user);
 
   // Accedo al token que esta en la propiedad token de la propiedad user
-  token = usuario.user.accessToken;
+  const token = usuario.user.accessToken;
 
   // Si hay token es que me he podido loguear correctamente
   console.log("token USUARIO EXITOSAMENTE LOGUEADO", token);
   cargarTodo(token);
 };
 
+const local = require("./version.json").local;
 const cargarTodo = (token) => {
-  const local = require("./version.json").local;
   var url;
   if (local) {
     url = "http://localhost:3002/users";
