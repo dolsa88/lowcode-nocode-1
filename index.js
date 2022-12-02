@@ -5,7 +5,7 @@ const express = require("express");
 var passwords = require("./cert.json");
 const admin = require("firebase-admin");
 admin.initializeApp({
-  credential: admin.credential.cert(passwords),
+  credential: admin.credential.cert(passwords)
 });
 
 const db = admin.firestore();

@@ -1,9 +1,18 @@
 const express = require("express");
 const cors = require("cors");
+const axios = require("axios")
+
 // Inicializacion Firestore Database
 //var passwords = require("./cert.json");
+// const admin = require("firebase-admin");
+
+var passwords = require("./cert.json");
 const admin = require("firebase-admin");
-admin.initializeApp();
+admin.initializeApp({
+  credential: admin.credential.cert(passwords)
+});
+
+//admin.initializeApp();
 
 const db = admin.firestore();
 const auth = admin.auth();
@@ -16,11 +25,11 @@ const authentication = async (token) => {
   // Me tengo que conectar con firebase y preguntarle si el token que me han pasado es correcto o no es correcto.
   console.log("Metodo autenticacion", token);
   try {
-    await auth.verifyIdToken(token);
-    console.log("linea 20");
+    const respuesta = await auth.verifyIdToken(token);
+    console.log("linea 20", respuesta);
     return true;
   } catch (e) {
-    console.log("linea 23");
+    console.log("linea 23", e);
     return false;
   }
 
@@ -30,6 +39,9 @@ const authentication = async (token) => {
 
 // OPERACIONS Create Read Update Delete
 app.get("/", (req, res) => res.send("HOla mundo"));
+
+
+
 
 // OPERACIO READ ALL USERS
 app.get("/users/:token", async (req, res) => {
