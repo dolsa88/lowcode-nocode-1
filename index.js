@@ -14,15 +14,7 @@ const app = express();
 app.use(express.json());
 const port = 3001;
 
-const authentication = ( token ) =>{
 
-    // Me tengo que conectar con firebase y preguntarle si el token que me han pasado es correcto o no es correcto.
-
-
-
-    // SI es correcto devuelvo un true y si no es correcto devuelvo un false
-
-}
 
 
 // OPERACIONS Create Read Update Delete
@@ -30,12 +22,7 @@ const authentication = ( token ) =>{
 // OPERACIO READ ALL USERS
 app.get("/users", async (req, res) => {
 
-  // Capturar el token que me envian desde el frontend y filtrarlo por la función de comprobacion
-
-  const token = req.body.tokenParaValidar
-
-  const puedePasar = authentication(token)
-  if( !puedePasar) { res.status(401).send({message: 'No estás autorizado a entrar'})    }
+ 
 
   // COnexión con la base de datos para leer todos los usuarios
   const users = await db.collection('usuarios').get()

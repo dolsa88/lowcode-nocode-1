@@ -6,7 +6,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 
 const db = admin.firestore();
-
+const auth = admin.auth();
 const app = express();
 app.use(cors())
 app.use(express.json());
@@ -14,10 +14,32 @@ const port = 3001;
 
 
 
+
+const authentication = async ( token ) =>{
+  // Me tengo que conectar con firebase y preguntarle si el token que me han pasado es correcto o no es correcto.
+  console.log('Metodo autenticacion', token)
+  try{
+    await auth.verifyIdToken(token)
+    return true
+  }catch(e){
+    return false
+  }
+  
+
+
+  // SI es correcto devuelvo un true y si no es correcto devuelvo un false
+
+}
 // OPERACIONS Create Read Update Delete
 
 // OPERACIO READ ALL USERS
-app.get("/users", async (req, res) => {
+app.get("/users/:token", async (req, res) => {
+
+   // Capturar el token que me envian desde el frontend y filtrarlo por la función de comprobacion
+   const token = req.params.token
+   console.log('Recibo en params el token',token)
+   const puedePasar = authentication(token) 
+   if( ! puedePasar  ) { return res.status(401).send({message: 'No estás autorizado a entrar'})    }
 
   // COnexión con la base de datos para leer todos los usuarios
   const users = await db.collection('usuarios').get()
