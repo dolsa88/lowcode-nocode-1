@@ -33,13 +33,16 @@
         console.log('prueba', prueba)
     }
 
-    const loguearUsuario = async (email, password) =>{
-        const prueba = await signInWithEmailAndPassword(auth, email, password)
-        
-        token = prueba.user.accessToken
+  const loguearUsuario = async (email, password) =>{
+        console.log('loguear usuario', email, password)
+        const usuario = await signInWithEmailAndPassword(auth, email, password)
+        console.log('us', usuario)
+        token = usuario.user.accessToken
+        console.log('token USUARIO EXITOSAMENTE LOGUEADO', token)
+        cargarTodo()
     }
 
-    loguearUsuario("juanito@gmail.com", "123456")
+    
 
     const cargarTodo = ( )=>{
         console.log('token desde index', token)
@@ -51,15 +54,18 @@
           }), 
       }
 
-
-
-
         )
         .then((response) => response.json())
         .then((data) => {
           console.log("data", data);
-          alert(data.message)
-          return data;
+          if(data.message){
+            alert(data.message)
+            return false
+          }else{
+            return data;
+          }
+          
+          
         })
         .then((users) => {
           console.log("users", users);
@@ -101,8 +107,18 @@
       }
       }
       
-      setTimeout(()=> {
-        console.log('token', token)
-      
-      cargarTodo()}, 5000)
+
+
+
+//window.loguearUsuario = loguearUsuario
+
+document.querySelector('button').addEventListener('click', ()=>{
+  
+
+  const email = document.getElementById("email").value
+  const password = document.getElementById("password").value
+  console.log('email y password', email, password)
+  loguearUsuario(email, password)
+});
+   
  
